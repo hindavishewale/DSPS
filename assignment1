@@ -11,7 +11,7 @@ public:
         cout << "Enter " << n << " elements:\n ";
         for(int i = 0; i < n; i++)
         {
-            cout<<"enter Element:";
+            cout<<"enter Element of "<<i<<"location";
             cin >> a[i];
         }
         cout<<"unsorted array:\n";
@@ -46,19 +46,27 @@ public:
 
     void search(int n, int target)
     {
-        int found = 0;
+        int time=0,first=0,last=0;
         for(int i = 0; i < n; i++)
         {
             if(target == a[i])
             {
-                cout << "\nElement found at index " << i ;
-                found = 1;
-                break;
+               if(time==0)
+               {
+                   first=i;
+               }
+               time++;
+               last=i;
             }
         }
-        if(found!=1)
+        if(time==0)
         {
             cout << "\nElement not found" << endl;
+        }
+        else
+        {
+            cout<<"element found at (first) psition: "<<first<<" and (last)position:"<<last;
+            cout<<"\nelements repeated:"<<time;
         }
     }
 };
