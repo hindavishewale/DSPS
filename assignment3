@@ -112,6 +112,13 @@ int main() {
                 break;
         }
 
+        if (ch != 5) {
+            cout << "Enter 1 to continue, 0 to exit: ";
+            cin >> choice;
+        } else {
+            choice = 0;
+        }
+
     } while (choice == 1);
 
     return 0;
