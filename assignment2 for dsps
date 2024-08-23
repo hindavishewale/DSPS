@@ -82,27 +82,41 @@ public:
         displayAll(books, n);
     }
     
-    // Static method to delete duplicate entries using a temporary array without modifying the original array
-    static void deleteduplicatetemp(const Lib books[], int n) {
+      static void deleteduplicatetemp(const Lib books[], int n) {
         Lib tempBooks[MAX_BOOKS];
+        Lib duplicates[MAX_BOOKS];
         int tempCount = 0;
+        int duplicateCount = 0;
 
+        // Find duplicates
         for (int i = 0; i < n; ++i) {
-            bool isDuplicate = false;
+            int Duplicate = 0;
             for (int j = 0; j < tempCount; ++j) {
                 if (books[i].name == tempBooks[j].name) {
-                    isDuplicate = true;
+                    Duplicate = 1;
                     break;
                 }
             }
-            if (!isDuplicate) {
+            if (Duplicate==1) {
+                // Check if the duplicate is already recorded
+                int alreadyRecorded = 0;
+                for (int k = 0; k < duplicateCount; ++k) {
+                    if (books[i].name == duplicates[k].name) {
+                        alreadyRecorded = 1;
+                        break;
+                    }
+                }
+                if (alreadyRecorded==0) {
+                    duplicates[duplicateCount++] = books[i];
+                }
+            } else {
                 tempBooks[tempCount++] = books[i];
             }
         }
 
-        cout << "\nDuplicates removed using temporary array.\n";
-        cout << "Unique books from the temporary array:" << endl;
-        displayAll(tempBooks, tempCount);
+        // Display duplicates
+        cout << "\nDuplicate entries:\n";
+        displayAll(duplicates, duplicateCount);
     }
 };
 
@@ -129,7 +143,6 @@ int main() {
                 }
                 break;
             case 2:
-                cout << "\tName\tCost\n";
                 Lib::displayAll(books, n);
                 break;
             case 3:
