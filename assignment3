@@ -1,11 +1,12 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 class student {
 public:
     int roll_no;
-    string name;
-    char clas;
+    string name, survey_answer;
+    string clas;
 
     void insert() {
         cout << "Enter division: ";
@@ -13,22 +14,22 @@ public:
         cout << "Enter roll_no: ";
         cin >> roll_no;
         cout << "Enter name: ";
-        cin>>name;
+        cin >> name;
     }
 
     void display() const {
-        cout << clas << "\t" << name << "\t" << roll_no << "\t" << "\n";
+        cout << clas << "\t" << name << "\t" << roll_no << "\n";
     }
 
     static void linear_search(student s[], int n, int key) {
-        bool flag = 0; // Declare flag
+        bool flag = false;
         for (int i = 0; i < n; ++i) {
             if (key == s[i].roll_no) {
-                flag = 1;
+                flag = true;
                 break;
             }
         }
-        if (flag==1) {
+        if (flag) {
             cout << "Present!!!\n";
         } else {
             cout << "Not present\n";
@@ -36,18 +37,18 @@ public:
     }
 
     static void binary_search(student s[], int n, int key) {
-       
+        // Sort the array based on roll_no
         for (int i = 0; i < n - 1; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 if (s[i].roll_no > s[j].roll_no) {
-          
                     student temp = s[i];
                     s[i] = s[j];
                     s[j] = temp;
                 }
             }
         }
-        
+
+        // Perform binary search
         int low = 0, high = n - 1, mid;
         while (low <= high) {
             mid = (low + high) / 2;
@@ -62,14 +63,48 @@ public:
         }
         cout << "Not present\n";
     }
+
+    int mcq() {
+        int ans1, ans2, ans3, ans4, ans5;
+        
+        // Set the width for aligning questions
+        const int width = 60;
+        
+        cout << setw(width) << left << "1. Did you understand the purpose of this program? (1/0): ";
+        cin >> ans1;
+        cout << setw(width) << left << "2. Was the program easy to use? (1/0): ";
+        cin >> ans2;
+        cout << setw(width) << left << "3. Was the documentation clear? (1/0): ";
+        cin >> ans3;
+        cout << setw(width) << left << "4. Would you recommend this program to others? (1/0): ";
+        cin >> ans4;
+        cout << setw(width) << left << "5. Do you think the program needs improvements? (1/0): ";
+        cin >> ans5;
+
+        int avg = ans1 + ans2 + ans3 + ans4 + ans5;
+        int per = (avg * 100) / 5; // Average of 5 questions, each scored 0 or 1
+        return per;
+    }
+
+    void synopsis(int per) {
+        if (per >= 60) {
+            survey_answer = "Yes";
+        } else {
+            survey_answer = "No";
+        }
+    }
+
+    void display_feedback() const {
+        cout << clas << "\t" << name << "\t" << roll_no << "\t" << survey_answer << "\n";
+    }
 };
 
 int main() {
     student s[10];
-    int n, ch, choice;
+    int n = 0, ch, choice;
 
     do {
-        cout << "1. Insert data\n2. Display data\n3. Linear search\n4. Binary search\n";
+        cout << "1. Insert data\n2. Display data\n3. Linear search\n4. Binary search\n5. Survey\n";
         cin >> ch;
 
         switch (ch) {
@@ -77,13 +112,13 @@ int main() {
                 cout << "Enter number of students: ";
                 cin >> n;
                 for (int i = 0; i < n; ++i) {
-                  cout<<"enter detail of student"<<i<<"\n";
+                    cout << "Enter details of student " << i + 1 << "\n";
                     s[i].insert();
                 }
                 break;
 
             case 2:
-                cout << "Class" << "\t" << "Name" << "\t" << "Roll No" << "\t" << "\n";
+                cout << "Class" << "\t" << "Name" << "\t" << "Roll No" << "\n";
                 for (int i = 0; i < n; ++i) {
                     s[i].display();
                 }
@@ -107,12 +142,29 @@ int main() {
                 }
                 break;
 
+            case 5:
+                {
+                    // Conduct surveys for all students
+                    for (int i = 0; i < n; i++) {
+                        cout << "Survey of student " << i + 1 << ":\n";
+                        int per = s[i].mcq();
+                        s[i].synopsis(per);
+                    }
+
+                    // Display feedback for all students
+                    cout << "Class" << "\t" << "Name" << "\t" << "Roll No" << "\t" << "Survey Answer\n";
+                    for (int i = 0; i < n; ++i) {
+                        s[i].display_feedback();
+                    }
+                }
+                break;
+
             default:
                 cout << "Invalid choice.\n";
                 break;
         }
 
-        if (ch != 5) {
+        if (ch != 6) {
             cout << "Enter 1 to continue, 0 to exit: ";
             cin >> choice;
         } else {
