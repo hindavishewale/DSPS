@@ -9,12 +9,11 @@ public:
     string clas;
 
     void insert() {
-        cout << "Enter division: ";
-        cin >> clas;
         cout << "Enter roll_no: ";
         cin >> roll_no;
         cout << "Enter name: ";
-        cin >> name;
+        cin >> name; cout << "Enter division: ";
+        cin >> clas;
     }
 
     void display() const {
@@ -88,14 +87,18 @@ public:
 
     void synopsis(int per) {
         if (per >= 60) {
-            survey_answer = "Yes";
+            survey_answer = "Program should be conducted";
         } else {
-            survey_answer = "No";
+            survey_answer = "program should not be conducted";
         }
     }
 
     void display_feedback() const {
-        cout << clas << "\t" << name << "\t" << roll_no << "\t" << survey_answer << "\n";
+    const int w=10,l_w=35;
+      cout << setw(w) << left << clas << "\t"
+         << setw(w) << left << name << "\t"
+         << setw(w) << left << roll_no << "\t"
+         << setw(l_w) << left << survey_answer << "\n";
     }
 };
 
@@ -152,7 +155,11 @@ int main() {
                     }
 
                     // Display feedback for all students
-                    cout << "Class" << "\t" << "Name" << "\t" << "Roll No" << "\t" << "Survey Answer\n";
+                    const int w=15;
+                 	 cout << setw(w) << left << "Class" 
+       			 << setw(w) << left << "Name" 
+         		<< setw(w) << left << "Roll No" 
+         		<< setw(w) << left << "Survey Answer" << "\n";
                     for (int i = 0; i < n; ++i) {
                         s[i].display_feedback();
                     }
