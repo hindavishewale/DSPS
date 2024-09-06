@@ -7,12 +7,14 @@ public:
     int roll_no;
     string name, survey_answer;
     string clas;
+    int per; // Add a variable to store the percentage
 
     void insert() {
         cout << "Enter roll_no: ";
         cin >> roll_no;
         cout << "Enter name: ";
-        cin >> name; cout << "Enter division: ";
+        cin >> name;
+        cout << "Enter division: ";
         cin >> clas;
     }
 
@@ -63,42 +65,69 @@ public:
         cout << "Not present\n";
     }
 
-    int mcq() {
+    void mcq() {
         int ans1, ans2, ans3, ans4, ans5;
-        
-        // Set the width for aligning questions
         const int width = 60;
-        
+
+        // Input and validate answer 1
         cout << setw(width) << left << "1. Did you understand the purpose of this program? (1/0): ";
         cin >> ans1;
+        if (ans1 != 1 && ans1 != 0) {
+            cout << "Invalid input. Please enter 1 or 0: ";
+            cin >> ans1;
+        }
+
+        // Input and validate answer 2
         cout << setw(width) << left << "2. Was the program easy to use? (1/0): ";
         cin >> ans2;
+        if (ans2 != 1 && ans2 != 0) {
+            cout << "Invalid input. Please enter 1 or 0: ";
+            cin >> ans2;
+        }
+
+        // Input and validate answer 3
         cout << setw(width) << left << "3. Was the documentation clear? (1/0): ";
         cin >> ans3;
+        if (ans3 != 1 && ans3 != 0) {
+            cout << "Invalid input. Please enter 1 or 0: ";
+            cin >> ans3;
+        }
+
+        // Input and validate answer 4
         cout << setw(width) << left << "4. Would you recommend this program to others? (1/0): ";
         cin >> ans4;
+        if (ans4 != 1 && ans4 != 0) {
+            cout << "Invalid input. Please enter 1 or 0: ";
+            cin >> ans4;
+        }
+
+        // Input and validate answer 5
         cout << setw(width) << left << "5. Do you think the program needs improvements? (1/0): ";
         cin >> ans5;
+        if (ans5 != 1 && ans5 != 0) {
+            cout << "Invalid input. Please enter 1 or 0: ";
+            cin >> ans5;
+        }
 
         int avg = ans1 + ans2 + ans3 + ans4 + ans5;
-        int per = (avg * 100) / 5; // Average of 5 questions, each scored 0 or 1
-        return per;
+        per = (avg * 100) / 5; // Average of 5 questions, each scored 0 or 1
     }
 
-    void synopsis(int per) {
+    void synopsis() {
         if (per >= 60) {
             survey_answer = "Program should be conducted";
         } else {
-            survey_answer = "program should not be conducted";
+            survey_answer = "Program should not be conducted";
         }
     }
 
     void display_feedback() const {
-    const int w=10,l_w=35;
-      cout << setw(w) << left << clas << "\t"
-         << setw(w) << left << name << "\t"
-         << setw(w) << left << roll_no << "\t"
-         << setw(l_w) << left << survey_answer << "\n";
+        const int w = 15, l_w = 35;
+        cout << setw(w) << left << clas << "\t"
+             << setw(w) << left << name << "\t"
+             << setw(w) << left << roll_no << "\t"
+             << setw(w) << left << per << "\t"
+             << setw(l_w) << left << survey_answer << "\n";
     }
 };
 
@@ -150,16 +179,17 @@ int main() {
                     // Conduct surveys for all students
                     for (int i = 0; i < n; i++) {
                         cout << "Survey of student " << i + 1 << ":\n";
-                        int per = s[i].mcq();
-                        s[i].synopsis(per);
+                        s[i].mcq();
+                        s[i].synopsis();
                     }
 
                     // Display feedback for all students
-                    const int w=15;
-                 	 cout << setw(w) << left << "Class" 
-       			 << setw(w) << left << "Name" 
-         		<< setw(w) << left << "Roll No" 
-         		<< setw(w) << left << "Survey Answer" << "\n";
+                    const int w = 15;
+                    cout << setw(w) << left << "Class" 
+                         << setw(w) << left << "Name" 
+                         << setw(w) << left << "Roll No"
+                         << setw(w) << left << "Percentage" 
+                         << setw(w) << left << "Survey Answer" << "\n";
                     for (int i = 0; i < n; ++i) {
                         s[i].display_feedback();
                     }
