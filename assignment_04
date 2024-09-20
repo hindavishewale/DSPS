@@ -1,66 +1,85 @@
-#include<iostream>
-#include<cctype>
-#define MAX 50
+#include <iostream>
+#include<ctype.h>
+#include<cstring>
+
 using namespace std;
-    char stack[MAX];
-    int top = -1, length;
-    void push(char x) {
-     if (top == MAX-1) {
-         cout << "STACK OVERFLOW\n";
-      }
- 
-      stack[++top] = x;
-     
-    }
-     char pop() {
-      if (top == -1) {
-       cout << "STACK UNDERFLOW\n";
-             return '\0';
-     }
-     
-        return stack[top--];
-       
-       }
-       
-      bool isPalindrome(string str)
-     {
-     string cleanStr="";
+#define max 50
+int stack[max];
+int top = -1, front = 0;
 
-     for(char c: str)
-      {
-       if(isalnum(c))
+void push(char a)
+{
+    top++;
+    stack[top] = a;
+}
+
+void pop()
+{
+    top--;
+}
+
+int main()
+{
+    int i, ch, choice;
+    char s[max], s1[max], b;
+    
+    cout << "enter string: ";
+    cin >> s1;
+    
+    int len_s = 0;  // Initialize len_s to 0
+
+    // Calculate the length of the input string
+    for (i = 0; s1[i] != '\0'; i++)
+    {
+        len_s++;
+    }
+
+    // Convert uppercase to lowercase manually using ASCII values
+    for (int i = 0; i <= len_s; i++)
+    {
+        if (s1[i] >= 65 && s1[i] <= 90)  // Check if character is uppercase (ASCII A-Z)
         {
-         cleanStr+=tolower(c);
-         }
-      }
-
-       int n =cleanStr.length();
-        for(int i=0;i<n;i++)
-     {
-        push(cleanStr[i]);
-
+            s[i] = s1[i] + 32;  // Convert to lowercase by adding 32 (ASCII a-z)
+        }
+        else
+        {
+            s[i] = s1[i];  // Copy other characters as is
+        }
     }
-   for (int i = 0; i < n; i++) {
-         if (pop() != cleanStr[i]) {
-            return false;
-           }
-      }
 
-      return true;
-   }
-
-int main() {
-    string str;
-    cout << "Enter a string: ";
-    getline(cin,str);
-
-    if (isPalindrome(str)) {
-        cout <<"\'"<< str <<"\'"<< " is a palindrome." << endl;
-    } else {
-        cout <<"\'"<< str <<"\'"<< " is not a palindrome." << endl;
+    // Push only alphabetic characters onto the stack using ASCII values
+    for (i = 0; s[i] != '\0'; i++)
+    {
+        if (s[i] >= 97 && s[i] <= 122)  // Check if character is lowercase alphabet (ASCII a-z)
+        {
+            b = s[i];
+            push(b);
+        }
     }
+
+    // Compare characters for palindrome check
+    for (i = 0; i < (len_s / 2); i++)
+    {
+        if (stack[top] == stack[front])
+        {
+            pop();
+            front++;
+        }
+        else
+        {
+            cout << "not palindrome";
+            break;
+        }
+    }
+
+    // If the loop completes, the string is a palindrome
+    if (len_s / 2 == front)
+    {
+        cout << "palindrome";
+    }
+
+    front = 0;
+    top = -1;
 
     return 0;
 }
-
-Modified version stack palindrome code.
