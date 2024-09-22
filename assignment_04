@@ -1,6 +1,5 @@
 #include <iostream>
-#include<ctype.h>
-#include<cstring>
+#include <cstring>
 
 using namespace std;
 #define max 50
@@ -20,41 +19,34 @@ void pop()
 
 int main()
 {
-    int i, ch, choice;
-    char s[max], s1[max], b;
+    int i, len_s = 0;
+    char s1[max], s[max], b;
     
     cout << "enter string: ";
-    cin >> s1;
-    
-    int len_s = 0;  // Initialize len_s to 0
-
-    // Calculate the length of the input string
-    for (i = 0; s1[i] != '\0'; i++)
-    {
-        len_s++;
-    }
+    cin.getline(s1, max);  // Use getline to read the entire input, including spaces
 
     // Convert uppercase to lowercase manually using ASCII values
-    for (int i = 0; i <= len_s; i++)
+    // and remove non-alphabetic characters
+    for (i = 0; s1[i] != '\0'; i++)
     {
-        if (s1[i] >= 65 && s1[i] <= 90)  // Check if character is uppercase (ASCII A-Z)
+        // Convert to lowercase and ignore non-alphabetic characters
+        if ((s1[i] >= 65 && s1[i] <= 90))  // Uppercase A-Z
         {
-            s[i] = s1[i] + 32;  // Convert to lowercase by adding 32 (ASCII a-z)
+            s[len_s] = s1[i] + 32;  // Convert to lowercase
+            len_s++;
         }
-        else
+        else if (s1[i] >= 97 && s1[i] <= 122)  // Lowercase a-z
         {
-            s[i] = s1[i];  // Copy other characters as is
+            s[len_s] = s1[i];  // No need to convert
+            len_s++;
         }
     }
+    s[len_s] = '\0';  // Null-terminate the processed string
 
-    // Push only alphabetic characters onto the stack using ASCII values
+    // Push only alphabetic characters onto the stack
     for (i = 0; s[i] != '\0'; i++)
     {
-        if (s[i] >= 97 && s[i] <= 122)  // Check if character is lowercase alphabet (ASCII a-z)
-        {
-            b = s[i];
-            push(b);
-        }
+        push(s[i]);
     }
 
     // Compare characters for palindrome check
@@ -68,7 +60,7 @@ int main()
         else
         {
             cout << "not palindrome";
-            break;
+            return 0;
         }
     }
 
