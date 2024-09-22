@@ -4,7 +4,7 @@
 using namespace std;
 #define max 50
 int stack[max];
-int top = -1, front = 0;
+int top = -1;
 
 void push(char a)
 {
@@ -49,13 +49,12 @@ int main()
         push(s[i]);
     }
 
-    // Compare characters for palindrome check
+    // Compare characters for palindrome check without using `front`
     for (i = 0; i < (len_s / 2); i++)
     {
-        if (stack[top] == stack[front])
+        if (stack[top] == s[i])
         {
             pop();
-            front++;
         }
         else
         {
@@ -65,13 +64,9 @@ int main()
     }
 
     // If the loop completes, the string is a palindrome
-    if (len_s / 2 == front)
-    {
-        cout << "palindrome";
-    }
+    cout << "palindrome";
 
-    front = 0;
-    top = -1;
+    top = -1;  // Reset stack top for reuse if needed
 
     return 0;
 }
