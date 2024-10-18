@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#define MAX 10
+
+using namespace std;
+
+class Pizza {
+public:
+    string type;
+    string size;
+    int qty;
+    int amount = 0;
+
+    void accept() {
+        cout << "Enter type of pizza: ";
+        cin >> type;
+        cout << "Enter size of pizza [small/medium/large]: ";
+        cin >> size;
+        cout << "Enter quantity: ";
+        cin >> qty;
+        calculateBill(); 
+    }
+
+    void calculateBill() {
+        if (size == "small") {
+            amount = qty * 100;
+        } else if (size == "medium") {
+            amount = qty * 150;
+        } else if (size == "large") {
+            amount = qty * 200;
+        } else {
+            cout << "Invalid size! Amount set to 0.\n";
+            amount = 0;
+        }
+    }
+
+    void display() {
+        cout << type << "\t" << size << "\t" << qty << "\t" << amount << endl;
+    }
+};
+
+int main() {
+    Pizza orders[MAX];
+    int front = 0, rear = -1, count = 0; 
+    int choice;
+
+    do {
+        cout << "1. Order pizza\n2. Serve order\n3. Display orders\n";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                if (count < MAX) {
+                    rear++; 
+                    orders[rear].accept(); 
+                    count++;
+                } else {
+                    cout << "Queue is full! Cannot take more orders.\n";
+                }
+                break;
+            case 2:
+                if (count == 0) {
+                    cout << "No orders to serve.\n";
+                } else {
+                    cout << "Serving order:\n";
+                    orders[front].display(); 
+                    front++; 
+                    count--;
+                }
+                break;
+            case 3:
+                if (count == 0) {
+                    cout << "No orders to display.\n";
+                } else {
+                    cout << "Current Orders:\n";
+                    cout << "Type\tSize\tQuantity\tAmount\n";
+                    for (int i = front; i <= rear; i++) {
+                        orders[i].display();
+                    }
+                }
+                break;
+            default:
+                cout << "Invalid choice\n";
+        }
+        cout << "Press 1 to continue, any other key to exit: ";
+        cin >> choice;
+    } while (choice == 1);
+
+    return 0;
+}
