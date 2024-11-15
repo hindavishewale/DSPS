@@ -1,0 +1,22 @@
+1. Add Music Track
+2. Remove Track
+3. Update Track Info
+4. Search Track
+5. Display All Tracks
+Enter choice: 1
+Enter track title: Shape of You
+Enter artist: Ed Sheeran
+Enter album: Divide
+Enter genre: Pop
+Enter duration (in minutes): 4.24
+Enter release year: 2017
+Enter 1 to continue, any other number to exit: 1
+
+1. Add Music Track
+2. Remove Track
+3. Update Track Info
+4. Search Track
+5. Display All Tracks
+Enter choice: 5
+Title: Shape of You    Artist: Ed Sheeran    Album: Divide    Genre: Pop    Duration: 4.24 mins    Release Year: 2017
+Enter 1 to continue, any other number to exit: 0
