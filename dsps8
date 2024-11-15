@@ -1,0 +1,126 @@
+#include<iostream>
+using namespace std;
+
+struct node {
+    string title, author, ISBN;
+    struct node* next;
+};
+
+int ch, choice;
+struct node* head = nullptr, *newnode, *temp;
+
+void insert() {
+    newnode = new node;  // Create a new node
+    cout << "Enter title: ";
+    cin >> newnode->title;
+    cout << "Enter author: ";
+    cin >> newnode->author;
+    cout << "Enter ISBN: ";
+    cin >> newnode->ISBN;
+    newnode->next = nullptr;  // Set the next pointer to NULL
+
+    if (head == nullptr) {  // If the list is empty, new node becomes the head
+        head = newnode;
+    } else {
+        temp = head;
+        while (temp->next != nullptr) {  // Traverse to the last node
+            temp = temp->next;
+        }
+        temp->next = newnode;  // Add new node at the end of the list
+    }
+}
+
+void display() {
+    if (head == nullptr) {
+        cout << "No books in the list." << endl;
+        return;
+    }
+
+    temp = head;
+    while (temp != nullptr) {  // Traverse and display each node
+        cout << temp->title << "\t" << temp->author << "\t" << temp->ISBN << endl;
+        temp = temp->next;
+    }
+}
+
+void deleted() {
+    if (head == nullptr) {
+        cout << "The list is empty. No book to delete." << endl;
+        return;
+    }
+
+    string title_delete;
+    cout << "Enter title to delete: ";
+    cin >> title_delete;
+
+    temp = head;
+    if (temp != nullptr && temp->title == title_delete) {  // If the book to delete is the head
+        head = temp->next;  // Move the head to the next node
+        delete temp;  // Delete the old head
+        cout << "Book deleted!" << endl;
+        return;
+    }
+
+    // Search for the book to delete
+    struct node* prev = nullptr;
+    while (temp != nullptr && temp->title != title_delete) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If the book is found
+    if (temp != nullptr) {
+        prev->next = temp->next;  // Skip the node to be deleted
+        delete temp;  // Delete the book
+        cout << "Book deleted!" << endl;
+    } else {
+        cout << "Book not found!" << endl;
+    }
+}
+
+void search() {
+    string search_title;
+    cout << "Enter title to search: ";
+    cin >> search_title;
+
+    temp = head;
+    while (temp != nullptr) {
+        if (temp->title == search_title) {
+            cout << "Book found: " << temp->title << "\t" << temp->author << "\t" << temp->ISBN << endl;
+            return;
+        }
+        temp = temp->next;
+    }
+    cout << "Book not found!" << endl;
+}
+
+int main() {
+    do {
+        cout << "1. Insert\n2. Delete\n3. Search\n4. Display\n";
+        cout << "Enter choice: ";
+        cin >> ch;
+        switch (ch) {
+        case 1:
+            insert();
+            break;
+        case 2:
+            deleted();
+            break;
+        case 3:
+            search();
+            break;
+        case 4:
+            display();
+            break;
+        default:
+            cout << "Invalid choice!" << endl;
+            break;
+        }
+
+        cout << "Enter 1 to continue, any other number to exit: ";
+        cin >> choice;
+
+    } while (choice == 1);
+
+    return 0;
+}
