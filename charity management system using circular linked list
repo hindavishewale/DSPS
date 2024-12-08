@@ -1,0 +1,205 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    string name;
+    int donor_id;
+    double donation_amount;
+    struct Node *next;
+};
+
+Node *head = 0, *temp, *newNode;
+
+// Function to add a new donor
+void insert(string name, int donor_id, double donation_amount) {
+    newNode = new Node;
+    newNode->name = name;
+    newNode->donor_id = donor_id;
+    newNode->donation_amount = donation_amount;
+    newNode->next = 0;
+
+    if (head == 0) {
+        head = newNode;
+        newNode->next = head;
+    } else {
+        temp = head;
+        while (temp->next != head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = head;
+    }
+}
+
+// Interactive function to add a new donor
+void insertNode() {
+    string name;
+    int donor_id;
+    double donation_amount;
+    cout << "Enter donor name, donor ID and donation amount: ";
+    cin >> name >> donor_id >> donation_amount;
+    insert(name, donor_id, donation_amount);
+}
+
+// Function to remove a donor from the list
+void removeNode() {
+    if (head == 0) {
+        cout << "List is empty. Nothing to delete.\n";
+        return;
+    }
+
+    int donor_id_delete;
+    cout << "Enter donor ID to delete: ";
+    cin >> donor_id_delete;
+
+    temp = head;
+    Node *prev = 0;
+
+    // If the head node is to be deleted
+    if (head->donor_id == donor_id_delete) {
+        if (head->next == head) {  // Only one node in the list
+            delete head;
+            head = 0;
+        } else {
+            while (temp->next != head) { // Traverse to the last node
+                temp = temp->next;
+            }
+            temp->next = head->next;
+            delete head;
+            head = temp->next;
+        }
+        cout << "Donor deleted.\n";
+        return;
+    }
+
+    // General case: Traverse the list to find the donor
+    do {
+        prev = temp;
+        temp = temp->next;
+        if (temp->donor_id == donor_id_delete) {
+            prev->next = temp->next;
+            delete temp;
+            cout << "Donor deleted.\n";
+            return;
+        }
+    } while (temp != head);
+
+    cout << "Donor ID not found.\n";
+}
+
+// Function to display all donors in the list
+void display() {
+    if (head == 0) {
+        cout << "No donors to display!\n";
+    } else {
+        temp = head;
+        do {
+            cout << "Donor Name: " << temp->name << ", Donor ID: " << temp->donor_id << ", Donation Amount: " << temp->donation_amount << endl;
+            temp = temp->next;
+        } while (temp != head);
+    }
+}
+
+// Function to search for a donor by donor ID
+void search() {
+    int donor_id_search, flag = 0;
+    cout << "Enter donor ID to search: ";
+    cin >> donor_id_search;
+
+    if (head == 0) {
+        cout << "No donors to search!\n";
+    } else {
+        temp = head;
+        do {
+            if (temp->donor_id == donor_id_search) {
+                cout << "Donor found: " << temp->name << ", Donor ID: " << temp->donor_id << ", Donation Amount: " << temp->donation_amount << endl;
+                flag = 1;
+                break;
+            }
+            temp = temp->next;
+        } while (temp != head);
+
+        if (flag == 0) {
+            cout << "Donor ID not found.\n";
+        }
+    }
+}
+
+// Function to update donor information
+void updateNode() {
+    int donor_id_update, flag = 0;
+    cout << "Enter donor ID to update: ";
+    cin >> donor_id_update;
+
+    if (head == 0) {
+        cout << "No donors to update!\n";
+        return;
+    }
+
+    temp = head;
+
+    do {
+        if (temp->donor_id == donor_id_update) {
+            flag = 1;
+            string new_name;
+            double new_donation_amount;
+            cout << "Enter new name and new donation amount: ";
+            cin >> new_name >> new_donation_amount;
+
+            temp->name = new_name;
+            temp->donation_amount = new_donation_amount;
+            cout << "Donor information updated.\n";
+            break;
+        }
+        temp = temp->next;
+    } while (temp != head);
+
+    if (flag == 0) {
+        cout << "Donor ID not found.\n";
+    }
+}
+
+int main() {
+    int ch, choice, n;
+    string name;
+    int donor_id;
+    double donation_amount;
+
+    cout << "Enter number of donors to initially add: ";
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cout << "Enter name, donor ID, and donation amount for donor " << i + 1 << ": ";
+        cin >> name >> donor_id >> donation_amount;
+        insert(name, donor_id, donation_amount);
+    }
+
+    do {
+        cout << "1. Add Donor\n2. Remove Donor\n3. Search Donor\n4. Display Donors\n5. Update Donor Information\n";
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                insertNode();
+                break;
+            case 2:
+                removeNode();
+                break;
+            case 3:
+                search();
+                break;
+            case 4:
+                display();
+                break;
+            case 5:
+                updateNode();
+                break;
+            default:
+                cout << "Invalid choice.\n";
+        }
+
+        cout << "Press 1 to continue or 0 to exit: ";
+        cin >> choice;
+    } while (choice == 1);
+
+    return 0;
+}
