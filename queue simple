@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+#define max 50
+int front=0,rear=0;
+int q[max];
+void insert(int n,int no)
+{
+    if(rear==n-1)
+    {
+        cout<<"overflow";
+    }
+    else
+    {
+        rear++;
+        q[rear]=no;
+        if(front==0)
+        {
+            front=1;
+        }
+    }
+}
+void deleted(int no)
+{
+    if(front==0)
+    {
+        cout<<"overflow";return;
+    }
+    else
+    {
+        no=q[front];
+        cout<<"deleted element:"<<no<<endl;
+        front++;
+        if(front>rear)
+        {
+            front=0;rear=0;
+        }
+    }
+}
+
+void display()
+{
+    for(int i=front;i<=rear;i++)
+    {
+        cout<<q[i]<<endl;
+    }
+}
+int main()
+{
+    int n,ch,choice,i,num;
+    cout<<"enter n:";
+    cin>>n;
+    do
+    {
+        cout<<"1.insert\n2.delete\n3.display\n";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+            cout<<"enter number:";
+            cin>>num;
+            insert(n,num);
+            break;
+            case 2:deleted(num);break;
+            case 3:display();break;
+        }
+        
+        cout<<"1 to cont:";
+        cin>>choice;
+    }while(choice==1);
+
+    return 0;
+}
