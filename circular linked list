@@ -139,6 +139,48 @@ void search()
     }
     
 }
+
+void update()
+{
+    string new_name;
+    int new_roll_no;
+    int roll_no_update,flag=0;
+    cout<<"ennter roll_no_update:";
+    cin>>roll_no_update;
+    if(head==0)
+    {
+        cout<<"empty!!";
+    }
+    else
+    {
+        temp=head;
+        do
+        {
+            if(roll_no_update==temp->roll_no)
+            {
+                cout<<"studnet found!!"<<endl;
+                cout<<temp->name<<"\t"<<temp->roll_no<<endl;
+                cout<<"enter new name:";
+                cin>>new_name;
+                cout<<"enter new roll_no:";
+                cin>>new_roll_no;
+                temp->name=new_name;
+                temp->roll_no=new_roll_no;
+                flag=1;
+                break;
+            }
+              temp=temp->next;
+        }while(temp!=head);
+        if(flag!=1)
+        {
+            cout<<"not found";
+        }
+    }
+    
+}
+
+
+
 int main()
 {
     int ch,choice,i,n;
@@ -154,7 +196,7 @@ int main()
    }
    do
    {
-       cout<<"1.insert\n2.remove\n3.search\n4.display\n\n";
+       cout<<"1.insert\n2.remove\n3.search\n4.display\n5.update\n";
        cin>>ch;
        switch(ch)
        {
@@ -162,6 +204,7 @@ int main()
            case 2:remove_node();break;
            case 3:search();break;
            case 4:display();break;
+           case 5:update();break;
        }
     
     cout<<"1 to cont:";
