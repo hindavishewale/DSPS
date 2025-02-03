@@ -1,0 +1,33 @@
+import java.util.*;
+class Hospital2
+{
+String dept="";
+String doc_name;
+String nurse_name;
+Hospital2(){}
+public void display()
+{
+System.out.println(dept+"\t"+doc_name+"\t"+nurse_name+"\n");
+}
+class Dentist extends Hospital2
+{
+String dentist_name;
+String education;
+int patient_number;
+Dentist()
+{
+dentist_name="abc";
+education="BAMS";
+patient_number=10;
+}
+
+public void display()
+{
+System.out.println(dept+"\t"+dentist_name+"\t"+education+"\n");
+} 
+}
+public static void main(String args[])
+{
+
+}
+}
